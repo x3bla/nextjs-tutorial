@@ -61,9 +61,9 @@ export async function createInvoice(prevState: State, formData: FormData) {
     } catch (error) {
         // We'll also log the error to the console for now
         console.error(error);
-        return {
-            message: 'Database Error: Failed to Create Invoice.\n' + String(error),
-        };
+        // return {
+            // message: 'Database Error: Failed to Create Invoice.\n' + String(error),
+        // };
     }
 
     revalidatePath('/dashboard/invoices');
@@ -91,9 +91,9 @@ export async function updateInvoice(id: string, formData: FormData) {
           `;
     } catch (error) {
         console.error(error);
-        return {
-            message: 'Database Error: Failed to Update Invoice.\n' + String(error),
-        };
+        // return {
+            // message: 'Database Error: Failed to Update Invoice.\n' + String(error),
+        // };
     }
 
 
@@ -102,18 +102,18 @@ export async function updateInvoice(id: string, formData: FormData) {
 }
 
 export async function deleteInvoice(id: string) {
-
     try {
-        await sql`DELETE FROM invoices WHERE id = ${id}`;
+        await sql`DELETE
+                  FROM invoices
+                  WHERE id = ${id}`;
     } catch (error) {
         console.error(error);
-        return {
-            message: 'Database Error: Failed to Delete Invoice.\n' + String(error),
-        }
+        throw new Error('Failed to delete invoice');
     }
 
     revalidatePath('/dashboard/invoices');
 }
+
 
 export async function authenticate(
     prevState: string | undefined,
